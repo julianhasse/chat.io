@@ -1,6 +1,5 @@
 // ===================================================
 // Messenger app
-// author: Julian Hasse, 2017
 // socket.io + express
 // ===================================================
 
@@ -11,11 +10,11 @@ const express = require('express'),
     io = require('socket.io').listen(server);
     var usernames = [];
 
-    server.listen(process.env.PORT || 3000);
-    console.log('Server running on PORT 3000')
+    server.listen(process.env.PORT || 4000);
+    console.log('Server running on PORT 4000')
 
     app.get('/', (req, res)=>{
-        res.sendfile(__dirname + '/index.html');
+        res.sendFile(__dirname + '/index.html');
     });
 
     io.sockets.on('connection', function(socket){

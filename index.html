@@ -1,82 +1,104 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <title>Messenger</title>
+	<head>
+    	<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	  	<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+		<title>Messenger</title>
 	  
-	  <style>
-		  @import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono');
+	<style>
+		@import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono');
 
-		  body{
-		  background:#f9f9f9;
-		  font-family: 'Roboto', sans-serif;
-		  }
-		  #container{
-			  width: 700px;
-			  margin: 0 auto;
-		  }
-		  #chatWindow {
-			  height:300px;
-		  }
-		  #mainWrapper{
-			display:none;
-		  }
-		  #chatWrapper{
-			  float:left;
-			  border:1px #ccc solid;
-			  border-radius: 10px;
-			  background: #f4f4f4;
-			  padding:10px;
-			  font-family: 'Roboto Mono', sans-serif;
-			  font-size: 12px;
-		  }
-		  #userWrapper{
-			  float:left;
-			  border:1px #ccc solid;
-			  border-radius: 10px;
-			  background: #f4f4f4;
-			  padding:10px;
-			  margin-left: 20px;
-			  width:150px;
-			  max-height: 200px;
-		  }
-		  #namesWrapper{
-			  float:left;
-			  border:1px #ccc solid;
-			  border-radius: 10px;
-			  background: #f4f4f4;
-			  padding:10px;
-			  margin-left: 20px;
-		  }
-		  input{
-			  height:30px;
-			  border:1px solid #ccc;
-			  font-family: 'Roboto Mono', sans-serif;
-		  }
+		body{
+		background:rgb(253, 251, 235);
+		font-family: 'Roboto', sans-serif;
+		}
+		#container{
+			width: 700px;
+			margin: 0 auto;
+		}
+		#chatWindow {
+			height:300px;
+			overflow: hidden;
+		}
+		#mainWrapper{
+		display:none;
+		margin-left: 20px;
+		}
+		#chatWrapper{
+			float:left;
+			border:1px #ccc solid;
+			border-radius: 10px;
+			background: #C6E2F5;
+			padding:10px;
+			font-family: 'Roboto Mono', sans-serif;
+			font-size: 12px;
+			color:#244E81;
+		}
+		#userWrapper{
+			float:left;
+			border:1px #ccc solid;
+			border-radius: 10px;
+			background: #C6E2F5;
+			padding:10px;
+			margin-left: 20px;
+			width:150px;
+			max-height: 200px;
+		}
+		#namesWrapper{
+			float:left;
+			border:1px #ccc solid;
+			border-radius: 10px;
+			background: #C6E2F5;
+			padding:10px;
+			margin-left: 30px;
+		}
+		input{
+			height:30px;
+			border:1px solid #ccc;
+			font-family: 'Roboto Mono', sans-serif;
+		}
+		.title {
+			font-size: 18px;
+			font-family: 'Roboto Mono', sans-serif;
+			color:#244E81;
+		}
 
-	  </style>
+		.firstTitle {
+			font-size: 22px;
+			font-family: 'Roboto Mono', sans-serif;
+			color:#244E81;
+		}
+
+	</style>
   </head>
 
   <body>
+
 	<div id="container">
 		<div id="namesWrapper">
-			<h2>Messenger</h2>
+			<h3 class="firstTitle">Messenger</h3>
 			<p>Create Username:</p>
 			<div id="error"></div>
 			<form id="usernameForm">
 				<input id="username" size="35" type="text">
-				<input type="submit" value="Submit">
+				<input type="submit" class="btn btn-primary btn-sm" value="Login">
 			</form>
 		</div>
 
 		<div id="mainWrapper">
-			<h2>Messenger</h2>
+			<h2 class='title'><span class="glyphicon glyphicon-flash"></span> Messenger</h2>
 			<div id="chatWrapper">
 				<div id="chatWindow"></div>
 				<form id="messageForm">
 						<input id="message" size="35" type="text" placeholder="Type something...">
-						<input type="submit" value="Submit">
+						<input type="submit" class="btn btn-primary btn-sm" value="Send">
 				</form>
 			</div>
 
@@ -85,13 +107,12 @@
 			</div>
 		</div>
 	</div>     
-	
-	
+
 	<script
 	src="https://code.jquery.com/jquery-3.2.1.min.js"
 	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 	crossorigin="anonymous"></script>
-	<script src='/socket.io/socket.io.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js'></script>
 	<script>
 		$(function(){
 			var socket = io.connect();
@@ -118,7 +139,7 @@
 			socket.on('usernames', function(data){
 				var html = '';
 				for (i = 0; i < data.length; i++){
-					html+= data[i] + '<br>';
+					html+= '<span class="glyphicon glyphicon-user"></span>' + ' ' + data[i] + '<br>';
 				}
 				$users.html(html);
 			});
@@ -130,7 +151,7 @@
 			});
 
 			socket.on('new message', function(data){
-				$chat.append('<strong style="color:red">' + data.user + '</strong>: ' + data.msg + '<br>')
+				$chat.prepend('<strong style="color:red">' + data.user + '</strong>: ' + data.msg + '<br>')
 			});
 		});
 	</script>
